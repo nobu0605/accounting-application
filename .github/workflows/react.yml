@@ -8,19 +8,19 @@ jobs:
     - name: npm install
       run: npm install 
 
-  # master_task:
-  #   if: github.ref == 'refs/heads/master'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - name: Login to Heroku Container registry
-  #     env: 
-  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  #     run: heroku container:login 
-  #   - name: Build and push
-  #     env:
-  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  #     run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-  #   - name: Deploy to Heroku
-  #     run: |
-  #       git push heroku HEAD:master -f
+  master_task:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Login to Heroku Container registry
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login 
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+    - name: Deploy to Heroku
+      run: |
+        git push heroku HEAD:master -f
