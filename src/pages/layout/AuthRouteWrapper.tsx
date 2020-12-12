@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
 };
 
 type State = {
@@ -14,7 +14,7 @@ class AuthRouteWrapper extends Component<Props, State> {
     super(props);
   }
 
-  render(): any {
+  render(): React.ReactNode {
     let authenticated: boolean;
     const token = localStorage.getItem('token');
 

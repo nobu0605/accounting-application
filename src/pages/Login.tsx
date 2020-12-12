@@ -2,6 +2,10 @@ import React from 'react';
 import axios from '../utils/axios';
 import styled from 'styled-components';
 import { Button, Input } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { languageState } from '../types/language';
+import { mainColor } from '../constants/style';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 type Props = any;
 type State = {
@@ -13,7 +17,7 @@ type State = {
   };
 };
 
-export default class App extends React.Component<Props, State> {
+class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -42,6 +46,7 @@ export default class App extends React.Component<Props, State> {
       })
       .then((response: any) => {
         localStorage.setItem('token', response.data.token);
+        location.pathname = '/home';
       })
       .catch((error: any) => {
         console.error(error);
@@ -60,36 +65,54 @@ export default class App extends React.Component<Props, State> {
           height: '100%',
         }}
       >
-        <Title>Welcome to our site!</Title>
+        <LoginTitle>
+          <FormattedMessage id="login.loginMessage" defaultMessage="ログイン" />
+        </LoginTitle>
         <br />
         <form onSubmit={this.handleSubmit}>
-          <Input
-            name="email"
-            type="email"
-            placeholder="E-mail address"
-            onChange={(e) => this.handleChange(e)}
-          />
-          <br />
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => this.handleChange(e)}
-          />
-          <br />
-          <Button type="submit" color="blue" size="large">
-            送信
-          </Button>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <Input
+              name="email"
+              type="email"
+              placeholder="E-mail address"
+              onChange={(e) => this.handleChange(e)}
+            />
+            <Input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => this.handleChange(e)}
+              style={{ marginTop: '15px' }}
+            />
+            <Button type="submit" style={{ color: mainColor, marginTop: '15px' }} size="large">
+              <FormattedMessage id="login.submitButton" defaultMessage="送信" />
+            </Button>
+          </div>
         </form>
       </div>
     );
   }
 }
 
-const Title = styled.span`
+const LoginTitle = styled.span`
   font-size: 20px;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 105px;
   margin-bottom: 5px;
   color: black;
 `;
+
+function mapStateToProps(state: languageState) {
+  return {
+    language: state.ui.language.locale,
+  };
+}
+
+export default connect(mapStateToProps)(injectIntl(Login));
