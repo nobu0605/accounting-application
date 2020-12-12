@@ -53,12 +53,19 @@ class Login extends React.Component<Props, State> {
         location.pathname = '/home';
       })
       .catch((error: any) => {
-        console.error(error);
-
-        this.setState({
+        if (error.response.status === 401) {
+          return this.setState({
+            loginError: this.props.intl.formatMessage({
+              id: 'login.login401Error',
+              defaultMessage: 'パスワードかメールアドレスが間違っています。',
+            }),
+          });
+        }
+        return this.setState({
           loginError: this.props.intl.formatMessage({
             id: 'login.loginError',
-            defaultMessage: 'パスワードかメールアドレスが間違っています。',
+            defaultMessage:
+              '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ログインして下さい。',
           }),
         });
       });
