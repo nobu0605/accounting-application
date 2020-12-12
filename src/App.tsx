@@ -11,6 +11,7 @@ import Setting from './pages/Setting';
 import AuthRouteWrapper from './pages/layout/AuthRouteWrapper';
 import LanguageProvider from './components/LanguageProvider';
 import HeaderWrapper from './pages/layout/HeaderWrapper';
+import PageWrapper from './pages/layout/PageWrapper';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -27,12 +28,14 @@ export default class App extends React.Component<Props> {
               <Route exact path="/" render={() => <Redirect to={{ pathname: '/login' }} />} />
               <AuthRouteWrapper>
                 <HeaderWrapper>
-                  <Route exact path="/home" component={Home} />
-                  <Route exact path="/profitLossStatement" component={ProfitLossStatement} />
-                  <Route exact path="/journal" component={Journal} />
-                  <Route exact path="/transaction" component={Transaction} />
-                  <Route exact path="/report" component={Report} />
-                  <Route exact path="/setting" component={Setting} />
+                  <PageWrapper>
+                    <Route exact path="/home" component={Home} />
+                    <Route exact path="/profitLossStatement" component={ProfitLossStatement} />
+                    <Route exact path="/journal" component={Journal} />
+                    <Route exact path="/transaction" component={Transaction} />
+                    <Route exact path="/report" component={Report} />
+                    <Route exact path="/setting" component={Setting} />
+                  </PageWrapper>
                 </HeaderWrapper>
               </AuthRouteWrapper>
             </Switch>
