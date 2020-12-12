@@ -4,7 +4,7 @@ import styled from 'styled-components';
 type Props = any;
 type State = any;
 
-export default class Journal extends React.Component<Props, State> {
+export default class ProfitLossStatement extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
@@ -21,7 +21,7 @@ export default class Journal extends React.Component<Props, State> {
           height: '100%',
         }}
       >
-        <Title>Welcome to our journal!</Title>
+        <Title>Welcome to our profitLossStatement!</Title>
       </div>
     );
   }
