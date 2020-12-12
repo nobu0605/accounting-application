@@ -6,6 +6,7 @@ export default {
     'header.transaction': '取引',
     'header.report': 'レポート',
     'header.setting': '設定',
+    'login.loginError': 'メールアドレスかパスワードが間違っています。',
     'login.loginMessage': 'ログイン',
     'login.submitButton': '送信',
   },

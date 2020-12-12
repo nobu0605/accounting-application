@@ -28,9 +28,15 @@ class HeaderWrapper extends React.Component<Props> {
     const { children } = this.props;
 
     return (
-      <div>
+      <div style={{ height: '100%' }}>
         <HeaderContainer>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '5px',
+            }}
+          >
             <HeaderTitle>
               <FontAwesomeIcon
                 icon="chart-pie"

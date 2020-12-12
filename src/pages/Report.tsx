@@ -11,16 +11,7 @@ export default class Report extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          width: '100%',
-          height: '100%',
-        }}
-      >
+      <div>
         <Title>Welcome to our Report!</Title>
       </div>
     );
