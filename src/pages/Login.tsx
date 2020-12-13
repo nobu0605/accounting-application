@@ -41,7 +41,7 @@ class Login extends React.Component<Props, State> {
     this.setState({ loginInput });
   }
 
-  handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     axios
       .post('/api/login', {

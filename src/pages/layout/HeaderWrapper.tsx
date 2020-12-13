@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import LanguageDropdown from '../../components/LanguageDropdown';
 import { mainColor } from '../../constants/style';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import axios from '../../utils/axios';
 
 type OwnProps = {
   children: React.ReactNode;
@@ -24,6 +25,15 @@ type OwnProps = {
 type Props = OwnProps & any;
 
 class HeaderWrapper extends React.Component<Props> {
+  componentDidMount() {
+    axios
+      .get('/api/user')
+      .then((response: any) => {})
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }
+
   render(): React.ReactNode {
     const { children } = this.props;
 
