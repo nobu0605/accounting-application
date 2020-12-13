@@ -1,7 +1,9 @@
 import React from 'react';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
-type Props = any;
+type Props = {
+  isDataFetching: boolean;
+};
 
 export default class Loading extends React.Component<Props> {
   constructor(props: Props) {
@@ -9,9 +11,9 @@ export default class Loading extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { isUserDataFetching } = this.props;
+    const { isDataFetching } = this.props;
     return (
-      <Dimmer active={isUserDataFetching} inverted>
+      <Dimmer active={isDataFetching} inverted>
         <Loader inline="centered" size="huge">
           Loading
         </Loader>
