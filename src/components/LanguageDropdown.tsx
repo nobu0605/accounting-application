@@ -4,7 +4,7 @@ import { mainColor } from '../constants/style';
 import { connect } from 'react-redux';
 import { createAction } from 'redux-actions';
 import { CHANGE_LANGUAGE } from '../actionTypes/index';
-import { languageState } from '../types/language';
+import { LanguageState } from '../types/language';
 
 const languageOptions = [
   { key: 'Japanese', text: 'Japanese', value: 'ja' },
@@ -17,7 +17,7 @@ class LanguageDropdown extends React.Component<Props> {
   changeLanguage(value: any) {
     this.props.changeLanguage(value);
   }
-  render() {
+  render(): React.ReactNode {
     const { language, height = '10%' } = this.props;
     return (
       <Dropdown
@@ -37,7 +37,7 @@ class LanguageDropdown extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state: languageState) {
+function mapStateToProps(state: LanguageState) {
   return {
     language: state.ui.language.locale,
   };
