@@ -15,9 +15,12 @@ import {
 library.add(faChartPie, faHome, faBookOpen, faBook, faPen, faSignal, faCog);
 import { Link } from 'react-router-dom';
 import LanguageDropdown from '../../components/LanguageDropdown';
+import UserDropdown from '../../components/UserDropdown';
 import { mainColor } from '../../constants/style';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import axios from '../../utils/axios';
+import { connect } from 'react-redux';
+import { fetchUser } from '../../thunks/user';
+import { UserState } from '../../types/user';
 
 type OwnProps = {
   children: React.ReactNode;
@@ -25,17 +28,15 @@ type OwnProps = {
 type Props = OwnProps & any;
 
 class HeaderWrapper extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
   componentDidMount() {
-    axios
-      .get('/api/user')
-      .then((response: any) => {})
-      .catch((error: any) => {
-        console.error(error);
-      });
+    this.props.loadUser();
   }
 
   render(): React.ReactNode {
-    const { children } = this.props;
+    const { children, user } = this.props;
 
     return (
       <div style={{ height: '100%' }}>
@@ -60,7 +61,10 @@ class HeaderWrapper extends React.Component<Props> {
                 <span style={{ color: mainColor }}>&nbsp;Accounting</span>
               </Link>
             </HeaderTitle>
-            <LanguageDropdown />
+            <HeaderRightSection>
+              <UserDropdown userName={user.name} />
+              <LanguageDropdown />
+            </HeaderRightSection>
           </div>
           <HeaderMenu>
             <Link to="/home">
@@ -135,5 +139,25 @@ const HeaderContainer = styled.div`
   background: white;
   margin-top: 5px;
 `;
+const HeaderRightSection = styled.div`
+  width: 16%;
+  height: 100%;
+  color: mainColor;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-export default injectIntl(HeaderWrapper);
+function mapStateToProps(state: UserState) {
+  return {
+    user: state.data.user,
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    loadUser: () => dispatch(fetchUser()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(HeaderWrapper));
