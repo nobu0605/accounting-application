@@ -3,7 +3,7 @@ import { IntlProvider } from 'react-intl';
 import jaLanguage from '../languages/ja';
 import enLanguage from '../languages/en';
 import { connect } from 'react-redux';
-import { languageState } from '../types/language';
+import { LanguageState } from '../types/language';
 
 type Messages = {
   ja: any;
@@ -37,7 +37,7 @@ class LanguageProvider extends Component<Props> {
   }
 }
 
-function mapStateToProps(state: languageState) {
+function mapStateToProps(state: LanguageState) {
   return {
     language: state.ui.language.locale,
   };
