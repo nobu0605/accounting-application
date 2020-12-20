@@ -10,6 +10,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
 import { fetchUser } from '../thunks/user';
+import { Link } from 'react-router-dom';
 
 type Props = any;
 type State = {
@@ -128,6 +129,14 @@ class Login extends React.Component<Props, State> {
               </div>
             </form>
           </LoginSection>
+          <Link style={{ marginTop: '15px' }} to="/register">
+            <span style={{ color: mainColor }}>
+              <FormattedMessage
+                id="login.registerNotYet"
+                defaultMessage="登録がお済みでない方はこちら"
+              />
+            </span>
+          </Link>
         </LoginContainer>
       </LoginWrapper>
     );
@@ -166,6 +175,7 @@ const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 90%;
 `;
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { Router } from 'react-router';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import Completed from './pages/Completed';
 import Home from './pages/Home';
 import Journal from './pages/Journal';
 import ProfitLossStatement from './pages/ProfitLossStatement';
@@ -25,7 +27,9 @@ export default class App extends React.Component<Props> {
           <Router history={this.props.history}>
             <Switch>
               <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
               <Route exact path="/" render={() => <Redirect to={{ pathname: '/login' }} />} />
+              <Route exact path="/completed" component={Completed} />
               <AuthRouteWrapper>
                 <HeaderWrapper>
                   <PageWrapper>
