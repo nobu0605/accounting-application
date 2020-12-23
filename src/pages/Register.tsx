@@ -4,12 +4,10 @@ import styled from 'styled-components';
 import { Button, Input, Popup, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { LanguageState } from '../types/language';
-import { UserState } from '../types/user';
 import { mainColor, backGroundColor } from '../constants/style';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
-import { fetchUser } from '../thunks/user';
 import { Link } from 'react-router-dom';
 import { isValidPassword, isEmpty } from '../utils/validations';
 import { industryOptionsJa } from '../languages/ja';
@@ -46,7 +44,6 @@ type State = {
     [key: string]: any;
   };
 };
-type ReduxState = LanguageState & UserState;
 
 type SelectedOption = {
   name?: string;
@@ -552,17 +549,10 @@ const RequiredMark = styled.span`
   font-size: 22px;
 `;
 
-function mapStateToProps(state: ReduxState) {
+function mapStateToProps(state: LanguageState) {
   return {
     language: state.ui.language.locale,
-    user: state.data.user,
   };
 }
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    loadUser: () => dispatch(fetchUser()),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Register));
+export default connect(mapStateToProps)(injectIntl(Register));
