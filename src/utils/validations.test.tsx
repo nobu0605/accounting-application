@@ -16,14 +16,14 @@ describe('check password strength', () => {
 
 describe('isEmpty', () => {
   test('true', () => {
-    const value = '';
-    expect(isEmpty(value)).toEqual(true);
+    const blankValue = '';
+    expect(isEmpty(blankValue)).toEqual(true);
 
-    const value2 = null;
-    expect(isEmpty(value2)).toEqual(true);
+    const nullValue = null;
+    expect(isEmpty(nullValue)).toEqual(true);
   });
   test('false', () => {
-    const isEmpty = 'hoge';
-    expect(isValidPassword(isEmpty)).toEqual(false);
+    const value = 'hoge';
+    expect(isValidPassword(value)).toEqual(false);
   });
 });
