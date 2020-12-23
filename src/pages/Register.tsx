@@ -48,6 +48,13 @@ type State = {
 };
 type ReduxState = LanguageState & UserState;
 
+type SelectedOption = {
+  name?: string;
+  value?: any;
+};
+
+const optionalKeys = ['number_of_employees', 'industry_class'];
+
 class Register extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -83,16 +90,18 @@ class Register extends React.Component<Props, State> {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>, selectedOptionValue?: any): void {
+  handleChange(e: React.ChangeEvent<HTMLInputElement>, selectedOption?: SelectedOption): void {
     const registerInput = { ...this.state.registerInput };
     const errors = { ...this.state.errors };
     let inputValue = e.target.value;
     let targetName = e.target.name;
     // DropDownのみe.targetから値取得できないため
-    if (selectedOptionValue) {
-      inputValue = selectedOptionValue;
-      targetName = 'industry_class';
+    if (selectedOption && selectedOption.value && selectedOption.name) {
+      inputValue = selectedOption.value;
+      targetName = selectedOption.name;
     }
+    console.log('inputValue: ', inputValue);
+    console.log('targetName: ', targetName);
     if (isEmpty(inputValue)) {
       errors['isRequired'][targetName] = true;
       this.setState({ errors });
@@ -125,8 +134,7 @@ class Register extends React.Component<Props, State> {
 
     // check required fields
     for (const key of Object.keys(registerInputs)) {
-      // optional values
-      if (key === 'number_of_employees' || key === 'industry_class') {
+      if (optionalKeys.includes(key)) {
         continue;
       }
       if (isEmpty(registerInputs[key])) {
@@ -390,7 +398,7 @@ class Register extends React.Component<Props, State> {
                   fluid
                   selection
                   options={industryOptions}
-                  onChange={(e: any, { value }) => this.handleChange(e, value)}
+                  onChange={(e: any, { name, value }) => this.handleChange(e, { name, value })}
                 />
                 <label
                   htmlFor="number_of_employees"
