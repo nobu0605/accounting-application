@@ -100,8 +100,6 @@ class Register extends React.Component<Props, State> {
       inputValue = selectedOption.value;
       targetName = selectedOption.name;
     }
-    console.log('inputValue: ', inputValue);
-    console.log('targetName: ', targetName);
     if (isEmpty(inputValue)) {
       errors['isRequired'][targetName] = true;
       this.setState({ errors });
