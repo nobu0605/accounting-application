@@ -1,5 +1,7 @@
 export default {
   messages: {
+    'completed.registered': '登録が完了しました。',
+    'completed.start': '利用を開始する。',
     'header.home': 'ホーム',
     'header.pl': '損益計算書',
     'header.journal': '仕訳日記帳',
@@ -11,5 +13,38 @@ export default {
       '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ログインして下さい。',
     'login.loginMessage': 'ログイン',
     'login.submitButton': '送信',
+    'register.alreadyHaveAccount': 'すでにアカウントをお持ちの方',
+    'register.confirmPasswordError': 'パスワードとパスワード(確認)が一致しません。',
+    'register.duplicateEmailError': 'このメールアドレスは既に登録されています。',
+    'register.fieldNumberOfEmployees': '従業員数',
+    'register.fieldCompanyName': '事業所名(会社名)',
+    'register.fieldConfirmPassword': 'パスワード(確認)',
+    'register.fieldEmail': 'メールアドレス',
+    'register.fieldFiscalYear': '会計年度',
+    'register.fieldFoundedDate': '設立年月日',
+    'register.fieldIndustry': '業種',
+    'register.fieldPassword': 'パスワード',
+    'register.fieldUserName': 'ユーザー名',
+    'register.inputRequiredError': '必須項目が入力されていません。',
+    'register.passwordStrengthError':
+      'パスワードは半角英字と半角数字を組み合わせた6文字以上で設定してください。',
+    'register.registerButton': '登録',
+    'register.registerError':
+      '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ご登録下さい。',
+    'register.registerMessage': 'アカウント新規作成',
+    'register.registerNotYet': '登録がお済みでない方はこちら',
+    'register.requiredError': 'は入力必須項目です。',
   },
 };
+
+export const industryOptionsJa = [
+  { key: 'it', value: 'IT', text: 'IT' },
+  { key: 'ret', value: '小売', text: '小売' },
+  { key: 'he', value: 'ヘルスケア', text: 'ヘルスケア' },
+  { key: 'in', value: '保険', text: '保険' },
+  { key: 'rea', value: '不動産', text: '不動産' },
+  { key: 'me', value: 'メディア', text: 'メディア' },
+  { key: 'ap', value: 'アパレル', text: 'アパレル' },
+  { key: 'tr', value: '運輸', text: '運輸' },
+  { key: 'ag', value: '農業', text: '農業' },
+];

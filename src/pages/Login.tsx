@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import { Button, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { LanguageState } from '../types/language';
-import { UserState } from '../types/user';
 import { mainColor, backGroundColor } from '../constants/style';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
-import { fetchUser } from '../thunks/user';
+import { Link } from 'react-router-dom';
 
 type Props = any;
 type State = {
@@ -21,7 +20,6 @@ type State = {
   };
   loginError: string;
 };
-type ReduxState = LanguageState & UserState;
 
 class Login extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -128,6 +126,14 @@ class Login extends React.Component<Props, State> {
               </div>
             </form>
           </LoginSection>
+          <Link style={{ marginTop: '15px' }} to="/register">
+            <span style={{ color: mainColor }}>
+              <FormattedMessage
+                id="login.registerNotYet"
+                defaultMessage="登録がお済みでない方はこちら"
+              />
+            </span>
+          </Link>
         </LoginContainer>
       </LoginWrapper>
     );
@@ -166,6 +172,7 @@ const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 90%;
 `;
 
@@ -180,17 +187,10 @@ const LoginSection = styled.div`
   background: white;
 `;
 
-function mapStateToProps(state: ReduxState) {
+function mapStateToProps(state: LanguageState) {
   return {
     language: state.ui.language.locale,
-    user: state.data.user,
   };
 }
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    loadUser: () => dispatch(fetchUser()),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Login));
+export default connect(mapStateToProps)(injectIntl(Login));
