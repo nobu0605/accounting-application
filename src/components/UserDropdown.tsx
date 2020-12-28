@@ -3,7 +3,7 @@ import { Dropdown } from 'semantic-ui-react';
 
 type Props = {
   userName: string;
-  isBorderRight: boolean;
+  isBorderRight?: boolean;
 };
 
 class UserDropdown extends React.Component<Props> {
@@ -18,7 +18,7 @@ class UserDropdown extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { userName, isBorderRight } = this.props;
+    const { userName, isBorderRight = false } = this.props;
 
     return (
       <Dropdown
