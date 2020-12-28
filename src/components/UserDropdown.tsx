@@ -3,6 +3,7 @@ import { Dropdown } from 'semantic-ui-react';
 
 type Props = {
   userName: string;
+  isBorderRight: boolean;
 };
 
 class UserDropdown extends React.Component<Props> {
@@ -17,12 +18,16 @@ class UserDropdown extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { userName } = this.props;
+    const { userName, isBorderRight } = this.props;
 
     return (
       <Dropdown
         style={{
           marginTop: '10px',
+          paddingRight: isBorderRight ? '17px' : '0px',
+          borderRight: isBorderRight ? '1px solid' : '0px',
+          paddingTop: isBorderRight ? '3px' : '0px',
+          paddingBottom: isBorderRight ? '3px' : '0px',
         }}
         text={userName}
       >

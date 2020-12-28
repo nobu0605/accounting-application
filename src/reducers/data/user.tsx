@@ -5,17 +5,20 @@ import {
 } from '../../actionTypes';
 import { handleActions } from 'redux-actions';
 import { UserState } from '../../types/user';
+import { CompanyInitialState } from '../../types/company';
 
 type InitialState = {
   error: boolean;
   errorMessage: null | string;
   isUserDataFetching: boolean;
+  company: CompanyInitialState;
 };
 
 export const initialState: InitialState = {
   error: false,
   errorMessage: null,
   isUserDataFetching: true,
+  company: {},
 };
 
 type Action = {

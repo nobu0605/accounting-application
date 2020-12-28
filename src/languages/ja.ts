@@ -2,6 +2,7 @@ export default {
   messages: {
     'completed.registered': '登録が完了しました。',
     'completed.start': '利用を開始する。',
+    'header.accountingTerm': '第{accountingTerm}期',
     'header.home': 'ホーム',
     'header.pl': '損益計算書',
     'header.journal': '仕訳日記帳',

@@ -2,6 +2,7 @@ export default {
   messages: {
     'completed.registered': 'Registration is completed.',
     'completed.start': 'Start to use.',
+    'header.accountingTerm': '{accountingTerm} term',
     'header.home': 'Home',
     'header.pl': 'P/L',
     'header.journal': 'Journal',
