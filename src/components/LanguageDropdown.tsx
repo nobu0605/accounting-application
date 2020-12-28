@@ -18,7 +18,7 @@ class LanguageDropdown extends React.Component<Props> {
     this.props.changeLanguage(value);
   }
   render(): React.ReactNode {
-    const { language, height = '10%' } = this.props;
+    const { language, height = '10%', marginTop = '15px' } = this.props;
     return (
       <Dropdown
         button
@@ -28,7 +28,7 @@ class LanguageDropdown extends React.Component<Props> {
         icon="world"
         options={languageOptions}
         value={language}
-        style={{ color: mainColor, height: height, marginTop: '15px', marginRight: '10px' }}
+        style={{ color: mainColor, height: height, marginTop: marginTop, marginRight: '10px' }}
         onChange={(e, { value }) => {
           this.changeLanguage(value);
         }}

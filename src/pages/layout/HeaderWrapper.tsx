@@ -37,6 +37,7 @@ class HeaderWrapper extends React.Component<Props> {
 
   render(): React.ReactNode {
     const { children, user } = this.props;
+    const company = user.company;
 
     return (
       <div style={{ height: '100%' }}>
@@ -62,8 +63,36 @@ class HeaderWrapper extends React.Component<Props> {
               </Link>
             </HeaderTitle>
             <HeaderRightSection>
-              <UserDropdown userName={user.name} />
-              <LanguageDropdown />
+              <div>
+                <span>
+                  <FormattedMessage
+                    id="header.accountingTerm"
+                    defaultMessage="第{accountingTerm}期"
+                    values={{
+                      accountingTerm: company.accounting_term,
+                    }}
+                  />
+                  &nbsp;&nbsp;&nbsp;{company.fiscal_start_date}
+                  &nbsp;~&nbsp;
+                  {company.fiscal_end_date}
+                </span>
+                <br />
+                <span
+                  style={{
+                    marginRight: '17px',
+                    borderRight: '1px solid',
+                    borderLeft: '1px solid',
+                    paddingRight: '17px',
+                    paddingLeft: '17px',
+                    paddingTop: '3px',
+                    paddingBottom: '3px',
+                  }}
+                >
+                  {company.name}
+                </span>
+                <UserDropdown isBorderRight={true} userName={user.name} />
+              </div>
+              <LanguageDropdown marginTop={'6px'} />
             </HeaderRightSection>
           </div>
           <HeaderMenu>
@@ -140,8 +169,9 @@ const HeaderContainer = styled.div`
   margin-top: 5px;
 `;
 const HeaderRightSection = styled.div`
-  width: 16%;
+  width: 26%;
   height: 100%;
+  text-align: right;
   color: mainColor;
   display: flex;
   justify-content: space-between;
