@@ -6,6 +6,8 @@ export type UserState = {
       id: string;
       name: string;
       company: CompanyState;
+      isUserDataFetching: boolean;
+      isUserDataFetched: boolean;
     };
   };
 };

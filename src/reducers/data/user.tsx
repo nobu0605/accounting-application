@@ -11,6 +11,7 @@ type InitialState = {
   error: boolean;
   errorMessage: null | string;
   isUserDataFetching: boolean;
+  isUserDataFetched: boolean;
   company: CompanyInitialState;
 };
 
@@ -18,6 +19,7 @@ export const initialState: InitialState = {
   error: false,
   errorMessage: null,
   isUserDataFetching: true,
+  isUserDataFetched: false,
   company: {},
 };
 
@@ -34,12 +36,14 @@ const user = handleActions(
       error: false,
       errorMessage: null,
       isUserDataFetching: true,
+      isUserDataFetched: false,
     }),
     [USER_DATA_FETCHED]: (state, action: Action) => ({
       ...state,
       error: false,
       errorMessage: null,
       isUserDataFetching: false,
+      isUserDataFetched: true,
       ...action.payload,
     }),
     [USER_DATA_FETCH_FAILED]: (state) => ({
@@ -47,6 +51,7 @@ const user = handleActions(
       error: true,
       errorMessage: 'Fetching user data is failed.',
       isUserDataFetching: false,
+      isUserDataFetched: false,
     }),
   },
   initialState

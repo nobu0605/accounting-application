@@ -21,6 +21,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { fetchUser } from '../../thunks/user';
 import { UserState } from '../../types/user';
+import Loading from '../../components/Loading';
 
 type OwnProps = {
   children: React.ReactNode;
@@ -38,6 +39,10 @@ class HeaderWrapper extends React.Component<Props> {
   render(): React.ReactNode {
     const { children, user } = this.props;
     const company = user.company;
+
+    if (user.isUserDataFetching) {
+      return <Loading isDataFetching={this.props.user.isUserDataFetching} />;
+    }
 
     return (
       <div style={{ height: '100%' }}>

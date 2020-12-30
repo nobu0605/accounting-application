@@ -14,12 +14,7 @@ export default class PageWrapper extends React.Component<Props> {
     return (
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
           width: '100%',
-          height: '100%',
           background: backGroundColor,
         }}
       >

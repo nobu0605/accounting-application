@@ -64,7 +64,7 @@ class Login extends React.Component<Props, State> {
         }
         return this.setState({
           loginError: this.props.intl.formatMessage({
-            id: 'login.loginError',
+            id: 'error.serverError',
             defaultMessage:
               '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ログインして下さい。',
           }),
