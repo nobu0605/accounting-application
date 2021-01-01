@@ -3,6 +3,6 @@ export function isValidPassword(password: string): boolean {
   return regex.test(password);
 }
 
-export function isEmpty(value: string): boolean {
+export function isEmpty(value: string | number): boolean {
   return value === '' || typeof value === 'undefined' || value === null;
 }

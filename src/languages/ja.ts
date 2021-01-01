@@ -11,7 +11,7 @@ export default {
     'completed.registered': '登録が完了しました。',
     'completed.start': '利用を開始する。',
     'error.serverError':
-      '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ログインして下さい。',
+      '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。',
     // These translations refer to account_key. So these are snake case.
     'general.advertising_expense': '広告宣伝費',
     'general.bonuses': '賞与',
@@ -77,6 +77,22 @@ export default {
     'register.registerMessage': 'アカウント新規作成',
     'register.registerNotYet': '登録がお済みでない方はこちら',
     'register.requiredError': 'は入力必須項目です。',
+    'transaction.addRow': '行追加',
+    'transaction.dealDate': '取引日',
+    'transaction.debitAccountName': '借方科目',
+    'transaction.debitAmount': '借方金額',
+    'transaction.debitTotalAmount': '借方合計',
+    'transaction.creditAccountName': '貸方科目',
+    'transaction.creditAmount': '貸方金額',
+    'transaction.creditTotalAmount': '貸方合計',
+    'transaction.journalEntry': '振替伝票を作成しました。',
+    'transaction.mismatchTotal': '貸借の金額が一致しません。',
+    'transaction.reduceRow': '行削除',
+    'transaction.remark': '摘要',
+    'transaction.requiredError': 'は入力必須項目です。',
+    'transaction.transferSlip': '振替伝票',
+    'transaction.subAccount': '補助科目',
+    'transaction.yen': '円',
   },
 };
 
