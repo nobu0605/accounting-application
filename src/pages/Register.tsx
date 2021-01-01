@@ -191,7 +191,7 @@ class Register extends React.Component<Props, State> {
         errors['registerError'] = this.props.intl.formatMessage({
           id: 'error.serverError',
           defaultMessage:
-            '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ご登録下さい。',
+            '何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。',
         });
         return this.setState({ errors });
       });
