@@ -1,6 +1,5 @@
 import React from 'react';
-import { Router } from 'react-router';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Completed from './pages/Completed';
@@ -24,7 +23,7 @@ export default class App extends React.Component<Props> {
     return (
       <div className="app">
         <LanguageProvider>
-          <Router history={this.props.history}>
+          <BrowserRouter>
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
@@ -33,17 +32,22 @@ export default class App extends React.Component<Props> {
               <AuthRouteWrapper>
                 <HeaderWrapper>
                   <PageWrapper>
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/profitLossStatement" component={ProfitLossStatement} />
-                    <Route exact path="/journal" component={Journal} />
-                    <Route exact path="/transaction" component={Transaction} />
-                    <Route exact path="/report" component={Report} />
-                    <Route exact path="/setting" component={Setting} />
+                    <Switch>
+                      <Route exact path="/home" component={Home} />
+                      <Route exact path="/profitLossStatement" component={ProfitLossStatement} />
+                      <Route exact path="/journal" component={Journal} />
+                      <Route exact path="/report" component={Report} />
+                      <Route exact path="/setting" component={Setting} />
+                      {/* todo: Make sure whether this implementation is correct. */}
+                      <BrowserRouter forceRefresh={true}>
+                        <Route exact path="/transaction" component={Transaction} />
+                      </BrowserRouter>
+                    </Switch>
                   </PageWrapper>
                 </HeaderWrapper>
               </AuthRouteWrapper>
             </Switch>
-          </Router>
+          </BrowserRouter>
         </LanguageProvider>
       </div>
     );

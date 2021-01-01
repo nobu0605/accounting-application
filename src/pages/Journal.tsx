@@ -43,15 +43,22 @@ class Journal extends React.Component<Props, State> {
       return (
         <FormattedMessage
           id="error.serverError"
-          defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度ログインして下さい。"
+          defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。"
         />
       );
     }
 
     return (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <table style={{ margin: 20, background: 'white' }}>
-          <thead style={{ background: '#DDDDDD', border: 'none' }}>
+        <table
+          style={{
+            margin: 20,
+            background: 'white',
+            borderBottom: 'solid 1px #ddd',
+            borderRight: 'solid 1px #ddd',
+          }}
+        >
+          <thead style={{ background: '#DDDDDD' }}>
             <tr>
               <TableData>
                 <FormattedMessage id="journal.dealDate" defaultMessage="取引日" />
@@ -86,12 +93,18 @@ class Journal extends React.Component<Props, State> {
             {journals.map((journal: JournalType, Index: number) => {
               return (
                 <tr key={Index}>
-                  <TableData>{moment(journal.deal_date).format('Y/M/DD')}</TableData>
+                  <TableData
+                    style={{
+                      borderTop: journal.is_multiple_journal ? 'none' : '1px solid #ddd',
+                    }}
+                  >
+                    {!journal.is_multiple_journal && moment(journal.deal_date).format('Y/M/DD')}
+                  </TableData>
                   <TableData>
                     {journal.is_default_account_debit ? (
                       <FormattedMessage
                         id={`general.${journal.debit_account_key}`}
-                        defaultMessage={journal.debit_account_name}
+                        defaultMessage={' '}
                       />
                     ) : (
                       journal.debit_account_name
@@ -103,7 +116,7 @@ class Journal extends React.Component<Props, State> {
                     {journal.is_default_account_credit ? (
                       <FormattedMessage
                         id={`general.${journal.credit_account_key}`}
-                        defaultMessage={journal.credit_account_name}
+                        defaultMessage={' '}
                       />
                     ) : (
                       journal.credit_account_name
@@ -112,9 +125,13 @@ class Journal extends React.Component<Props, State> {
                   <TableData>{journal.credit_sub_account_key}</TableData>
                   <TableData>{journal.credit_amount.toLocaleString()}</TableData>
                   <TableData>{journal.remark}</TableData>
-                  <TableData>
+                  <TableData
+                    style={{
+                      borderTop: journal.is_multiple_journal ? 'none' : '1px solid #ddd',
+                    }}
+                  >
                     <form>
-                      <EditButton type="submit" value="Edit" />
+                      {!journal.is_multiple_journal && <EditButton type="submit" value="Edit" />}
                     </form>
                   </TableData>
                 </tr>
