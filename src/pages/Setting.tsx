@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { mainColor } from '../constants/style';
 import { Button } from 'semantic-ui-react';
 import { AccountType } from '../types/account';
+import { classifications } from '../constants/classifications';
 
 type Props = any;
 type State = {
@@ -110,15 +111,13 @@ class Setting extends React.Component<Props, State> {
                       defaultMessage: '選択してください',
                     })}
                   </option>
-                  {accounts.map((account: AccountType, Index: number) => {
+                  {classifications.map((classification: string, Index: number) => {
                     return (
-                      <option key={Index} value={account.account_key}>
-                        {account.is_default_account
-                          ? this.props.intl.formatMessage({
-                              id: `general.${account.account_key}`,
-                              defaultMessage: account.name,
-                            })
-                          : account.name}
+                      <option key={Index} value={classification}>
+                        {this.props.intl.formatMessage({
+                          id: `general.${classification}`,
+                          defaultMessage: classification,
+                        })}
                       </option>
                     );
                   })}
