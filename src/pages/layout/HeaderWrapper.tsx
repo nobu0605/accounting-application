@@ -107,10 +107,10 @@ class HeaderWrapper extends React.Component<Props> {
                 <FormattedMessage id="header.home" defaultMessage="ホーム" />
               </MenuList>
             </Link>
-            <Link to="/profitLossStatement">
+            <Link to="/financialStatement">
               <MenuList>
                 <HeaderIcon icon="book-open" />
-                <FormattedMessage id="header.pl" defaultMessage="損益計算書" />
+                <FormattedMessage id="header.financialStatement" defaultMessage="財務諸表" />
               </MenuList>
             </Link>
             <Link to="/journal">
