@@ -17,16 +17,25 @@ import { Link } from 'react-router-dom';
 import LanguageDropdown from '../../components/LanguageDropdown';
 import UserDropdown from '../../components/UserDropdown';
 import { mainColor } from '../../constants/style';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { fetchUser } from '../../thunks/user';
 import { UserState } from '../../types/user';
+import { CompanyState } from '../../types/company';
 import Loading from '../../components/Loading';
 
 type OwnProps = {
   children: React.ReactNode;
+  user: {
+    id: string;
+    name: string;
+    company: CompanyState;
+    isUserDataFetching: boolean;
+    isUserDataFetched: boolean;
+  };
+  loadUser: () => void;
 };
-type Props = OwnProps & any;
+type Props = OwnProps & WrappedComponentProps;
 
 class HeaderWrapper extends React.Component<Props> {
   constructor(props: Props) {

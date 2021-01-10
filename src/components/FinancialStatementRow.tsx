@@ -1,8 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-type Props = any;
+type Account = {
+  account_key: string;
+  amount: number;
+  classification: string;
+};
+
+type OwnProps = {
+  accounts: Array<any>;
+  intlId: string;
+};
+
+type Props = WrappedComponentProps & OwnProps;
 
 class FinancialStatementRow extends React.Component<Props> {
   constructor(props: Props) {
@@ -21,7 +32,7 @@ class FinancialStatementRow extends React.Component<Props> {
           <TableData></TableData>
         </tr>
         {accounts &&
-          accounts.map((account: any, Index: number) => {
+          accounts.map((account: Account, Index: number) => {
             return (
               <tr key={Index}>
                 <TableData key={Index}></TableData>

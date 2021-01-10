@@ -11,12 +11,18 @@ const languageOptions = [
   { key: 'English', text: 'English', value: 'en' },
 ];
 
-type Props = any;
+type Props = {
+  language: string;
+  height?: string;
+  marginTop?: string;
+  changeLanguage: (value: string) => void;
+};
 
 class LanguageDropdown extends React.Component<Props> {
   changeLanguage(value: any) {
     this.props.changeLanguage(value);
   }
+
   render(): React.ReactNode {
     const { language, height = '10%', marginTop = '15px' } = this.props;
     return (

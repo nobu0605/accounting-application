@@ -16,9 +16,7 @@ import PageWrapper from './pages/layout/PageWrapper';
 
 import 'semantic-ui-css/semantic.min.css';
 
-type Props = any;
-
-export default class App extends React.Component<Props> {
+export default class App extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="app">

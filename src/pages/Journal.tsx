@@ -3,12 +3,23 @@ import styled from 'styled-components';
 import axios from '../utils/axios';
 import moment from 'moment';
 import { UserState } from '../types/user';
+import { CompanyState } from '../types/company';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mainColor } from '../constants/style';
 import { JournalType } from '../types/journal';
 
-type Props = any;
+type OwnProps = {
+  company: CompanyState;
+  user: {
+    id: string;
+    name: string;
+    company: CompanyState;
+    isUserDataFetching: boolean;
+    isUserDataFetched: boolean;
+  };
+};
+type Props = OwnProps & WrappedComponentProps;
 type State = {
   journals: Array<any>;
   isError: boolean;

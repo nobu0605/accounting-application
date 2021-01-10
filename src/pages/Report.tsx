@@ -2,10 +2,24 @@ import React from 'react';
 import { RadialChart } from 'react-vis';
 import axios from '../utils/axios';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { UserState } from '../types/user';
+import { CompanyState } from '../types/company';
 
-type Props = any;
+type OwnProps = {
+  company: CompanyState;
+  user: {
+    id: string;
+    name: string;
+    company: CompanyState;
+    isUserDataFetching: boolean;
+    isUserDataFetched: boolean;
+  };
+};
+type Props = OwnProps & WrappedComponentProps;
+
+type ReduxState = UserState & CompanyState;
+
 type State = {
   ratios: {
     current_assets_ratio: number;
@@ -219,7 +233,7 @@ class Report extends React.Component<Props, State> {
   }
 }
 
-function mapStateToProps(state: UserState) {
+function mapStateToProps(state: ReduxState) {
   return {
     user: state.data.user,
     company: state.data.user.company,

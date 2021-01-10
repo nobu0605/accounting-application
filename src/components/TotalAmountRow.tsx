@@ -1,8 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-type Props = any;
+type OwnProps = {
+  totalAmount: number;
+  intlId: string;
+};
+type Props = OwnProps & WrappedComponentProps;
 
 class TotalAmountRow extends React.Component<Props> {
   constructor(props: Props) {

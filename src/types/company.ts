@@ -1,5 +1,5 @@
 export type CompanyInitialState = {
-  id?: string;
+  id?: number;
   name?: string;
   industry_class?: string;
   number_of_employees?: number;
@@ -10,7 +10,7 @@ export type CompanyInitialState = {
 };
 
 export type CompanyState = {
-  id: string;
+  id: number;
   name: string;
   industry_class: string;
   number_of_employees: number;
