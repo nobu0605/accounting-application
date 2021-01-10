@@ -1,14 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-type Props = any;
-type State = any;
-
-export default class Home extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+export default class Home extends React.Component {
   render(): React.ReactNode {
     return (
       <div>

@@ -4,16 +4,14 @@ import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { LanguageState } from '../types/language';
 import { mainColor, backGroundColor } from '../constants/style';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
 import { Link } from 'react-router-dom';
 
-type Props = any;
+type Props = WrappedComponentProps;
 
-type ReduxState = LanguageState;
-
-class Register extends React.Component<Props> {
+class Completed extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -104,10 +102,10 @@ const CompletedSection = styled.div`
   background: white;
 `;
 
-function mapStateToProps(state: ReduxState) {
+function mapStateToProps(state: LanguageState) {
   return {
     language: state.ui.language.locale,
   };
 }
 
-export default connect(mapStateToProps)(injectIntl(Register));
+export default connect(mapStateToProps)(injectIntl(Completed));

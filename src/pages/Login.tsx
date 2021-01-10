@@ -5,12 +5,17 @@ import { Button, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { LanguageState } from '../types/language';
 import { mainColor, backGroundColor } from '../constants/style';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
 import { Link } from 'react-router-dom';
+import history from 'history';
 
-type Props = any;
+type OwnPros = {
+  language: string;
+  history: history.History;
+};
+type Props = OwnPros & WrappedComponentProps;
 type State = {
   response: any;
   loginInput: {

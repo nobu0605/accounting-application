@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import axios from '../utils/axios';
 import { mainColor } from '../constants/style';
 import { UserState } from '../types/user';
+import { CompanyState } from '../types/company';
 import { AccountType } from '../types/account';
 import { MultipleJournalType } from '../types/journal';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Button, Message } from 'semantic-ui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,9 +15,24 @@ import JournalEntry from '../components/JournalEntry';
 import { faPlus, faMinus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 library.add(faPlus, faMinus, faTimesCircle);
 import { isEmpty } from '../utils/validations';
-import { createBrowserHistory } from 'history';
+import history, { createBrowserHistory } from 'history';
 
-type Props = any;
+type OwnProps = {
+  company: CompanyState;
+  user: {
+    id: string;
+    name: string;
+    company: CompanyState;
+    isUserDataFetching: boolean;
+    isUserDataFetched: boolean;
+  };
+  history: history.History;
+  location: history.Location<any>;
+};
+type Props = OwnProps & WrappedComponentProps;
+
+type ReduxState = UserState & CompanyState;
+
 type IsRequiredErrors = {
   deal_date: { isRequired: boolean; message: string };
   debit_account_key: { isRequired: boolean; message: string };
@@ -119,7 +135,7 @@ class Transaction extends React.Component<Props, State> {
       });
 
     // Reset history.location.state
-    const history: any = createBrowserHistory();
+    const history: history.History<any> = createBrowserHistory();
     if (history.location.state && history.location.state.isDoneRegistration) {
       const state = { ...history.location.state };
       delete state.isDoneRegistration;
@@ -127,7 +143,7 @@ class Transaction extends React.Component<Props, State> {
     }
   }
 
-  static getDerivedStateFromProps(nextProps: any, prevState: State) {
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
     let creditTotalAmount = prevState.journalInput.credit_amount;
     let debitTotalAmount = prevState.journalInput.debit_amount;
     const errors = { ...prevState.errors };
@@ -188,7 +204,7 @@ class Transaction extends React.Component<Props, State> {
   handleChange(
     e: React.ChangeEvent<HTMLInputElement>,
     isRequired: boolean,
-    multipleJournalIndex?: number
+    multipleJournalIndex?: number | null
   ) {
     const journalInput = { ...this.state.journalInput };
     const errors = { ...this.state.errors };
@@ -579,7 +595,7 @@ const TableData = styled.td`
   border-left: 1px solid #ddd;
 `;
 
-function mapStateToProps(state: UserState) {
+function mapStateToProps(state: ReduxState) {
   return {
     user: state.data.user,
     company: state.data.user.company,
