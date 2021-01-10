@@ -26,7 +26,7 @@ class FinancialStatementRow extends React.Component<Props> {
       <>
         <tr>
           <TableData>
-            <FormattedMessage id={intlId} defaultMessage="" />
+            <FormattedMessage id={intlId} defaultMessage=" " />
           </TableData>
           <TableData></TableData>
           <TableData></TableData>
