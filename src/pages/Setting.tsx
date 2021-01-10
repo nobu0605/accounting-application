@@ -1,15 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from '../utils/axios';
-import { UserState } from '../types/user';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mainColor } from '../constants/style';
 import { Button } from 'semantic-ui-react';
 import { AccountType } from '../types/account';
 import { classifications } from '../constants/classifications';
+import { UserState } from '../types/user';
+import { CompanyState } from '../types/company';
 
-type Props = any;
+type OwnProps = {
+  company: CompanyState;
+  user: {
+    id: string;
+    name: string;
+    company: CompanyState;
+    isUserDataFetching: boolean;
+    isUserDataFetched: boolean;
+  };
+};
+type Props = OwnProps & WrappedComponentProps;
+
+type ReduxState = UserState & CompanyState;
+
 type State = {
   accounts: Array<any>;
   isError: boolean;
@@ -203,7 +217,7 @@ const RegisterButton = styled.button`
   color: white;
 `;
 
-function mapStateToProps(state: UserState) {
+function mapStateToProps(state: ReduxState) {
   return {
     user: state.data.user,
     company: state.data.user.company,

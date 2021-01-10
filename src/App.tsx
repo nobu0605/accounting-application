@@ -5,7 +5,7 @@ import Register from './pages/Register';
 import Completed from './pages/Completed';
 import Home from './pages/Home';
 import Journal from './pages/Journal';
-import ProfitLossStatement from './pages/ProfitLossStatement';
+import FinancialStatement from './pages/FinancialStatement';
 import Transaction from './pages/Transaction';
 import Report from './pages/Report';
 import Setting from './pages/Setting';
@@ -16,9 +16,7 @@ import PageWrapper from './pages/layout/PageWrapper';
 
 import 'semantic-ui-css/semantic.min.css';
 
-type Props = any;
-
-export default class App extends React.Component<Props> {
+export default class App extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="app">
@@ -34,7 +32,7 @@ export default class App extends React.Component<Props> {
                   <PageWrapper>
                     <Switch>
                       <Route exact path="/home" component={Home} />
-                      <Route exact path="/profitLossStatement" component={ProfitLossStatement} />
+                      <Route exact path="/financialStatement" component={FinancialStatement} />
                       <Route exact path="/journal" component={Journal} />
                       <Route exact path="/report" component={Report} />
                       <Route exact path="/setting" component={Setting} />

@@ -1,14 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { mainColor } from '../constants/style';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { AccountType } from '../types/account';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 library.add(faPlus);
 import { Button } from 'semantic-ui-react';
 
-type Props = any;
+type OwnPros = {
+  accounts: Array<any>;
+  isMultipleJournal: boolean;
+  multipleJournalIndex?: number | null;
+  isMismatchTotal: boolean;
+  isFilledRequiredFields: boolean;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    isRequired: boolean,
+    multipleJournalIndex?: number | null
+  ) => void;
+};
+type Props = OwnPros & WrappedComponentProps;
 
 class JournalEntry extends React.Component<Props> {
   constructor(props: Props) {
