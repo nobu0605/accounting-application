@@ -1,6 +1,8 @@
 # Getting Started 
 
-### `npm install`
+### Install libraries
+`npm install`
 
-### `npm start`
+### Start application
+`npm start`
  
