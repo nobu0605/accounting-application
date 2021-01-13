@@ -60,7 +60,7 @@ class Journal extends React.Component<Props, State> {
     }
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', minHeight: '670px' }}>
         <table
           style={{
             margin: 20,
