@@ -1,16 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-type Props = any;
+type OwnProps = {
+  title: string;
+  amount: any;
+};
 
-export default class AccountCard extends React.Component<Props> {
-  render() {
+type Props = OwnProps & WrappedComponentProps;
+
+class AccountCard extends React.Component<Props> {
+  render(): React.ReactNode {
     const { title, amount } = this.props;
     return (
       <div>
         <AccountCards>
           <AccountTitle>{title}</AccountTitle>
-          <Amount>{amount}円</Amount>
+          <Amount>
+            {amount}
+            &nbsp;
+            <FormattedMessage id={'common.yen'} defaultMessage="円" />
+          </Amount>
         </AccountCards>
       </div>
     );
@@ -31,3 +41,4 @@ const Amount = styled.span`
   margin: 10px;
   font-size: 16px;
 `;
+export default injectIntl(AccountCard);

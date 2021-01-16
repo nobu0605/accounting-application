@@ -5,6 +5,8 @@ export default {
     'common.amount': '金額',
     'common.assets': '資産の部',
     'common.balanceSheet': '貸借対照表',
+    'common.cashEquivalentBalanceTransition': '現預金 残高推移',
+    'common.cashEquivalentTotalBalance': '現預金 残高合計',
     'common.classification': '区分',
     'common.delete': '削除',
     'common.edit': '編集',
@@ -12,6 +14,7 @@ export default {
     'common.register': '登録',
     'common.registerAccount': '勘定科目登録',
     'common.select': '選択してください',
+    'common.yen': '円',
     'completed.registered': '登録が完了しました。',
     'completed.start': '利用を開始する。',
     'error.serverError':
@@ -144,7 +147,6 @@ export default {
     'transaction.requiredError': 'は入力必須項目です。',
     'transaction.transferSlip': '振替伝票',
     'transaction.subAccount': '補助科目',
-    'transaction.yen': '円',
   },
 };
 

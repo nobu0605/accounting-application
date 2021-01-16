@@ -5,6 +5,8 @@ export default {
     'common.amount': 'Amount',
     'common.assets': 'Assets',
     'common.balanceSheet': 'Balance sheet',
+    'common.cashEquivalentBalanceTransition': 'Cash equivalent balance transition',
+    'common.cashEquivalentTotalBalance': 'Cash equivalent total balance',
     'common.classification': 'Classification',
     'common.delete': 'Delete',
     'common.edit': 'Edit',
@@ -12,6 +14,7 @@ export default {
     'common.register': 'Register',
     'common.registerAccount': 'Register an account',
     'common.select': 'Please select',
+    'common.yen': 'yen',
     'completed.registered': 'Registration is completed.',
     'completed.start': 'Start to use.',
     'error.serverError': 'An error has occurred. Sorry, please try again after a while.',
@@ -144,7 +147,6 @@ export default {
     'transaction.requiredError': ' is required.',
     'transaction.transferSlip': 'Transfer slip',
     'transaction.subAccount': 'Sub account',
-    'transaction.yen': 'yen',
   },
 };
 

@@ -513,7 +513,7 @@ class Transaction extends React.Component<Props, State> {
               </span>
               <span style={{ marginRight: '20px' }}>
                 {this.state.debitTotalAmount.toLocaleString()}&nbsp;&nbsp;
-                <FormattedMessage id="transaction.yen" defaultMessage="円" />
+                <FormattedMessage id="common.yen" defaultMessage="円" />
               </span>
             </div>
             <div
@@ -533,7 +533,7 @@ class Transaction extends React.Component<Props, State> {
               </span>
               <span style={{ marginRight: '20px' }}>
                 {this.state.creditTotalAmount.toLocaleString()}&nbsp;&nbsp;
-                <FormattedMessage id="transaction.yen" defaultMessage="円" />
+                <FormattedMessage id="common.yen" defaultMessage="円" />
               </span>
             </div>
             <div style={{ width: '20%', display: 'flex', justifyContent: 'flex-end' }}>
