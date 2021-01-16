@@ -78,8 +78,6 @@ class Home extends React.Component<Props, State> {
       legend: { position: 'bottom' },
     };
 
-    const data = total_cash_each_month_amounts;
-
     if (this.state.isServerError) {
       return (
         <FormattedMessage
@@ -89,7 +87,7 @@ class Home extends React.Component<Props, State> {
       );
     }
 
-    if (data.length === 0) {
+    if (total_cash_each_month_amounts.length === 0) {
       return <Loading isDataFetching={true} />;
     }
 
@@ -131,7 +129,7 @@ class Home extends React.Component<Props, State> {
             chartType="LineChart"
             width="95%"
             height="430px"
-            data={data}
+            data={total_cash_each_month_amounts}
             options={options}
           />
         </div>
