@@ -29,7 +29,7 @@ export default {
     'general.bonuses': 'Bonuses',
     'general.buildings': 'Buildings',
     'general.cash': 'Cash',
-    'general.checking_accounts': 'Checking account',
+    'general.checking_accounts': 'Checking accounts',
     'general.common_stock': 'Common stock',
     'general.copyrights': 'Copyrights',
     'general.cost_of_goods_sold': 'Cost of goods sold',
