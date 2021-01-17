@@ -9,6 +9,7 @@ import { AccountType } from '../types/account';
 import { classifications } from '../constants/classifications';
 import { UserState } from '../types/user';
 import { CompanyState } from '../types/company';
+import Loading from '../components/Loading';
 
 type OwnProps = {
   company: CompanyState;
@@ -26,16 +27,15 @@ type ReduxState = UserState & CompanyState;
 
 type State = {
   accounts: Array<any>;
-  isError: boolean;
+  isServerError: boolean;
 };
 
 class Setting extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
     this.state = {
       accounts: [],
-      isError: false,
+      isServerError: false,
     };
   }
 
@@ -47,7 +47,7 @@ class Setting extends React.Component<Props, State> {
       })
       .catch(() => {
         return this.setState({
-          isError: true,
+          isServerError: true,
         });
       });
   }
@@ -68,15 +68,19 @@ class Setting extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const { accounts, isError } = this.state;
+    const { accounts, isServerError } = this.state;
 
-    if (isError) {
+    if (isServerError) {
       return (
         <FormattedMessage
           id="error.serverError"
           defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。"
         />
       );
+    }
+
+    if (accounts.length === 0) {
+      return <Loading isDataFetching={true} />;
     }
 
     return (

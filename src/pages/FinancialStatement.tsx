@@ -141,7 +141,8 @@ class FinancialStatement extends React.Component<Props, State> {
       );
     }
 
-    if (!account_amounts) {
+    // Check whether the data is fetched from api.
+    if (current_assets.length === 0) {
       return <Loading isDataFetching={true} />;
     }
 

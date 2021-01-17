@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mainColor } from '../constants/style';
 import { JournalType } from '../types/journal';
+import Loading from '../components/Loading';
 
 type OwnProps = {
   company: CompanyState;
@@ -22,7 +23,7 @@ type OwnProps = {
 type Props = OwnProps & WrappedComponentProps;
 type State = {
   journals: Array<any>;
-  isError: boolean;
+  isServerError: boolean;
 };
 
 class Journal extends React.Component<Props, State> {
@@ -30,7 +31,7 @@ class Journal extends React.Component<Props, State> {
     super(props);
     this.state = {
       journals: [],
-      isError: false,
+      isServerError: false,
     };
   }
 
@@ -42,21 +43,25 @@ class Journal extends React.Component<Props, State> {
       })
       .catch(() => {
         return this.setState({
-          isError: true,
+          isServerError: true,
         });
       });
   }
 
   render(): React.ReactNode {
-    const { journals, isError } = this.state;
+    const { journals, isServerError } = this.state;
 
-    if (isError) {
+    if (isServerError) {
       return (
         <FormattedMessage
           id="error.serverError"
           defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。"
         />
       );
+    }
+
+    if (journals.length === 0) {
+      return <Loading isDataFetching={true} />;
     }
 
     return (
@@ -95,9 +100,9 @@ class Journal extends React.Component<Props, State> {
               <TableData>
                 <FormattedMessage id="journal.remark" defaultMessage="摘要" />
               </TableData>
-              <TableData>
+              {/* <TableData>
                 <FormattedMessage id="common.edit" defaultMessage="編集" />
-              </TableData>
+              </TableData> */}
             </tr>
           </thead>
           <tbody>
@@ -136,7 +141,7 @@ class Journal extends React.Component<Props, State> {
                   <TableData>{journal.credit_sub_account_key}</TableData>
                   <TableData>{journal.credit_amount.toLocaleString()}</TableData>
                   <TableData>{journal.remark}</TableData>
-                  <TableData
+                  {/* <TableData
                     style={{
                       borderTop: journal.is_multiple_journal ? 'none' : '1px solid #ddd',
                     }}
@@ -144,7 +149,7 @@ class Journal extends React.Component<Props, State> {
                     <form>
                       {!journal.is_multiple_journal && <EditButton type="submit" value="Edit" />}
                     </form>
-                  </TableData>
+                  </TableData> */}
                 </tr>
               );
             })}
