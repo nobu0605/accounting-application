@@ -7,6 +7,7 @@ import { UserState } from '../types/user';
 import { CompanyState } from '../types/company';
 import FinancialStatementRow from '../components/FinancialStatementRow';
 import TotalAmountRow from '../components/TotalAmountRow';
+import Loading from '../components/Loading';
 
 type OwnProps = {
   company: CompanyState;
@@ -138,6 +139,10 @@ class FinancialStatement extends React.Component<Props, State> {
           defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。"
         />
       );
+    }
+
+    if (!account_amounts) {
+      return <Loading isDataFetching={true} />;
     }
 
     return (
