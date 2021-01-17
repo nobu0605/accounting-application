@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { UserState } from '../types/user';
 import { CompanyState } from '../types/company';
+import Loading from '../components/Loading';
 
 type OwnProps = {
   company: CompanyState;
@@ -30,9 +31,10 @@ type State = {
     cost_of_goods_sold_ratio: number;
     selling_general_admin_expenses_ratio: number;
     operating_income_ratio: number;
+    is_fetched: boolean;
   };
   errors: {
-    isReportError: boolean;
+    isServerError: boolean;
   };
 };
 
@@ -49,9 +51,10 @@ class Report extends React.Component<Props, State> {
         cost_of_goods_sold_ratio: 0,
         selling_general_admin_expenses_ratio: 0,
         operating_income_ratio: 0,
+        is_fetched: false,
       },
       errors: {
-        isReportError: false,
+        isServerError: false,
       },
     };
   }
@@ -64,7 +67,7 @@ class Report extends React.Component<Props, State> {
       })
       .catch(() => {
         const errors = { ...this.state.errors };
-        errors['isReportError'] = true;
+        errors['isServerError'] = true;
         return this.setState({ errors });
       });
   }
@@ -79,6 +82,7 @@ class Report extends React.Component<Props, State> {
       cost_of_goods_sold_ratio,
       selling_general_admin_expenses_ratio,
       operating_income_ratio,
+      is_fetched,
     } = this.state.ratios;
 
     const assetsData = [
@@ -158,13 +162,17 @@ class Report extends React.Component<Props, State> {
       },
     ];
 
-    if (this.state.errors.isReportError) {
+    if (this.state.errors.isServerError) {
       return (
         <FormattedMessage
           id="error.serverError"
           defaultMessage="何らかのエラーが発生しています。申し訳ありませんが時間を空けて再度お試し下さい。"
         />
       );
+    }
+
+    if (is_fetched === false) {
+      return <Loading isDataFetching={true} />;
     }
 
     return (

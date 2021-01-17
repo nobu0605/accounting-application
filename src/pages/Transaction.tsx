@@ -67,7 +67,7 @@ type State = {
   creditTotalAmount: number;
   debitTotalAmount: number;
   errors: {
-    isTransactionError: boolean;
+    isServerError: boolean;
     isRequiredErrors: IsRequiredErrors;
     isMismatchTotal: boolean;
     [key: string]: any;
@@ -100,7 +100,7 @@ class Transaction extends React.Component<Props, State> {
       creditTotalAmount: 0,
       debitTotalAmount: 0,
       errors: {
-        isTransactionError: false,
+        isServerError: false,
         isRequiredErrors: {
           deal_date: { isRequired: false, message: 'transaction.dealDate' },
           debit_account_key: { isRequired: false, message: 'transaction.debitAccountName' },
@@ -130,7 +130,7 @@ class Transaction extends React.Component<Props, State> {
       })
       .catch(() => {
         const errors = { ...this.state.errors };
-        errors['isTransactionError'] = true;
+        errors['isServerError'] = true;
         return this.setState({ errors });
       });
 
@@ -196,7 +196,7 @@ class Transaction extends React.Component<Props, State> {
       })
       .catch(() => {
         const errors = { ...this.state.errors };
-        errors['isTransactionError'] = true;
+        errors['isServerError'] = true;
         return this.setState({ errors });
       });
   }
@@ -309,7 +309,7 @@ class Transaction extends React.Component<Props, State> {
         }
       });
 
-      if (this.state.errors.isTransactionError) {
+      if (this.state.errors.isServerError) {
         errorMessages.push(
           <span style={{ color: 'red' }}>
             {this.props.intl.formatMessage({
