@@ -100,28 +100,28 @@ class Home extends React.Component<Props, State> {
                 id: 'common.cashEquivalentTotalBalance',
                 defaultMessage: '現預金 残高合計',
               })}
-              amount={total_cash_equivalent_amount.toLocaleString()}
+              amount={total_cash_equivalent_amount}
             />
             <AccountCard
               title={this.props.intl.formatMessage({
                 id: 'general.cash',
                 defaultMessage: '現金',
               })}
-              amount={cash.toLocaleString()}
+              amount={cash}
             />
             <AccountCard
               title={this.props.intl.formatMessage({
                 id: 'general.savings_accounts',
                 defaultMessage: '普通預金',
               })}
-              amount={savings_accounts_amount.toLocaleString()}
+              amount={savings_accounts_amount}
             />
             <AccountCard
               title={this.props.intl.formatMessage({
                 id: 'general.checking_accounts',
                 defaultMessage: '当座預金',
               })}
-              amount={checking_accounts_amount.toLocaleString()}
+              amount={checking_accounts_amount}
             />
           </div>
           <Chart

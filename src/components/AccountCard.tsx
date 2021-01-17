@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 
 type OwnProps = {
   title: string;
-  amount: any;
+  amount: number;
 };
 
 type Props = OwnProps & WrappedComponentProps;
@@ -12,12 +12,13 @@ type Props = OwnProps & WrappedComponentProps;
 class AccountCard extends React.Component<Props> {
   render(): React.ReactNode {
     const { title, amount } = this.props;
+
     return (
       <div>
         <AccountCards>
           <AccountTitle>{title}</AccountTitle>
           <Amount>
-            {amount}
+            {amount.toLocaleString()}
             &nbsp;
             <FormattedMessage id={'common.yen'} defaultMessage="円" />
           </Amount>
