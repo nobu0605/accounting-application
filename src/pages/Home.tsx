@@ -25,8 +25,8 @@ type State = {
     cash: number;
     savings_accounts_amount: number;
     checking_accounts_amount: number;
-    total_cash_amount: number;
-    total_cash_each_month_amounts: Array<any>;
+    total_cash_equivalent_amount: number;
+    total_cash_equivalent_each_month_amounts: Array<any>;
   };
   isServerError: boolean;
 };
@@ -41,8 +41,8 @@ class Home extends React.Component<Props, State> {
         cash: 0,
         savings_accounts_amount: 0,
         checking_accounts_amount: 0,
-        total_cash_amount: 0,
-        total_cash_each_month_amounts: [],
+        total_cash_equivalent_amount: 0,
+        total_cash_equivalent_each_month_amounts: [],
       },
       isServerError: false,
     };
@@ -66,8 +66,8 @@ class Home extends React.Component<Props, State> {
       cash,
       savings_accounts_amount,
       checking_accounts_amount,
-      total_cash_amount,
-      total_cash_each_month_amounts,
+      total_cash_equivalent_amount,
+      total_cash_equivalent_each_month_amounts,
     } = this.state.accounts;
 
     const options = {
@@ -87,7 +87,7 @@ class Home extends React.Component<Props, State> {
       );
     }
 
-    if (total_cash_each_month_amounts.length === 0) {
+    if (total_cash_equivalent_each_month_amounts.length === 0) {
       return <Loading isDataFetching={true} />;
     }
 
@@ -100,7 +100,7 @@ class Home extends React.Component<Props, State> {
                 id: 'common.cashEquivalentTotalBalance',
                 defaultMessage: '現預金 残高合計',
               })}
-              amount={total_cash_amount.toLocaleString()}
+              amount={total_cash_equivalent_amount.toLocaleString()}
             />
             <AccountCard
               title={this.props.intl.formatMessage({
@@ -129,7 +129,7 @@ class Home extends React.Component<Props, State> {
             chartType="LineChart"
             width="95%"
             height="430px"
-            data={total_cash_each_month_amounts}
+            data={total_cash_equivalent_each_month_amounts}
             options={options}
           />
         </div>
