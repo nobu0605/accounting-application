@@ -1,6 +1,7 @@
 export default {
   messages: {
     'common.account': 'Account',
+    'common.accountKey': 'Account key',
     'common.accountList': 'Accounts list',
     'common.amount': 'Amount',
     'common.assets': 'Assets',
@@ -132,6 +133,9 @@ export default {
     'register.registerMessage': 'Create a new account',
     'register.requiredError': ' is required.',
     'report.report': 'Report',
+    'setting.registerAccount': 'Your account registration was successful.',
+    'setting.validAccountKey':
+      'Please enter the account key using only half-width alphabetic characters and underscores.',
     'transaction.addRow': 'Add a row',
     'transaction.dealDate': 'Deal date',
     'transaction.debitAccountName': 'Debit account',

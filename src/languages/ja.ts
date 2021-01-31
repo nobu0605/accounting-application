@@ -1,6 +1,7 @@
 export default {
   messages: {
     'common.account': '勘定科目',
+    'common.accountKey': 'アカウントキー',
     'common.accountList': '勘定科目一覧',
     'common.amount': '金額',
     'common.assets': '資産の部',
@@ -132,6 +133,8 @@ export default {
     'register.registerMessage': 'アカウント新規作成',
     'register.requiredError': 'は入力必須項目です。',
     'report.report': 'レポート',
+    'setting.registerAccount': '勘定科目を登録しました。',
+    'setting.validAccountKey': 'アカウントキーは半角英字とアンダーバーのみで入力してください。',
     'transaction.addRow': '行追加',
     'transaction.dealDate': '取引日',
     'transaction.debitAccountName': '借方科目',
