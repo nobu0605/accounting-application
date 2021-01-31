@@ -1,4 +1,4 @@
-import { isValidPassword, isEmpty } from './validations';
+import { isValidPassword, isValidAccountKey, isEmpty } from './validations';
 
 describe('check password strength', () => {
   test('success', () => {
@@ -11,6 +11,29 @@ describe('check password strength', () => {
 
     const shortPasswordWithNumber = 'pass1';
     expect(isValidPassword(shortPasswordWithNumber)).toEqual(false);
+  });
+});
+
+describe('check valid account key', () => {
+  test('success: Long account name with underscore', () => {
+    const accountName = 'loss_on_disposal_of_fixed_assets';
+    expect(isValidAccountKey(accountName)).toEqual(true);
+  });
+  test('success: Two words account name with underscore', () => {
+    const accountName = 'interest_income';
+    expect(isValidAccountKey(accountName)).toEqual(true);
+  });
+  test('success: Short account name', () => {
+    const accountName = 'sales';
+    expect(isValidAccountKey(accountName)).toEqual(true);
+  });
+  test('failure: Two words account name with hyphen', () => {
+    const accountName = 'interest-income';
+    expect(isValidAccountKey(accountName)).toEqual(false);
+  });
+  test('failure: Japanese account name', () => {
+    const accountName = '受取利息';
+    expect(isValidAccountKey(accountName)).toEqual(false);
   });
 });
 

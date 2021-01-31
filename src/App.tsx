@@ -36,7 +36,7 @@ export default class App extends React.Component {
                       <Route exact path="/journal" component={Journal} />
                       <Route exact path="/report" component={Report} />
                       <Route exact path="/setting" component={Setting} />
-                      {/* todo: Make sure whether this implementation is correct. */}
+                      {/* todo: Make sure whether this BrowserRouter implementation is correct. */}
                       <BrowserRouter forceRefresh={true}>
                         <Route exact path="/transaction" component={Transaction} />
                       </BrowserRouter>
