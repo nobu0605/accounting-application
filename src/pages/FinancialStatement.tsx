@@ -49,6 +49,7 @@ type State = {
     net_income: number;
     operating_income: number;
     ordinary_income: number;
+    isFetched: boolean;
   };
   errors: {
     isServerError: boolean;
@@ -84,6 +85,7 @@ class FinancialStatement extends React.Component<Props, State> {
         net_income: 0,
         operating_income: 0,
         ordinary_income: 0,
+        isFetched: false,
       },
       errors: {
         isServerError: false,
@@ -115,6 +117,7 @@ class FinancialStatement extends React.Component<Props, State> {
       net_income,
       operating_income,
       ordinary_income,
+      isFetched,
     } = this.state.financialStatement;
     const {
       cost_of_goods_sold,
@@ -142,7 +145,7 @@ class FinancialStatement extends React.Component<Props, State> {
     }
 
     // Check whether the data is fetched from api.
-    if (current_assets.length === 0) {
+    if (isFetched === false) {
       return <Loading isDataFetching={true} />;
     }
 

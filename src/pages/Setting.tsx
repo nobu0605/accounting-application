@@ -173,9 +173,21 @@ class Setting extends React.Component<Props, State> {
       });
   }
 
-  handleDeletion(e: React.FormEvent<HTMLFormElement>, accountId: number) {
+  handleDeletion(e: React.FormEvent<HTMLFormElement>, accountId: number, accountName: string) {
     e.preventDefault();
-    if (!confirm('本当に削除しますか?')) {
+    if (
+      !confirm(
+        `${this.props.intl.formatMessage(
+          {
+            id: 'common.deleteAccount',
+          },
+          {
+            defaultMessage: '勘定科目 {accountName} を本当に削除しますか?',
+            accountName: accountName,
+          }
+        )}`
+      )
+    ) {
       return;
     }
     const errors = { ...this.state.errors };
@@ -440,11 +452,13 @@ class Setting extends React.Component<Props, State> {
                       <TableData>{account.account_key}</TableData>
                       <TableData>
                         {!account.is_default_account && (
-                          <form onSubmit={(e) => this.handleDeletion(e, account.id)}>
-                            <Button type="submit" size="small">
-                              Delete
-                            </Button>
-                          </form>
+                          <Button
+                            onClick={(e: any) => this.handleDeletion(e, account.id, account.name)}
+                            type="submit"
+                            size="small"
+                          >
+                            Delete
+                          </Button>
                         )}
                         {account.id === deletionErrorId && (
                           <span style={{ color: 'red', marginTop: '10px' }}>
