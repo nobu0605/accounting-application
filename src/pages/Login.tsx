@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from '../utils/axios';
 import styled from 'styled-components';
-import { Button, Input } from 'semantic-ui-react';
+import { Button, Input, Accordion, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { LanguageState } from '../types/language';
 import { mainColor, backGroundColor } from '../constants/style';
@@ -17,29 +17,38 @@ type OwnPros = {
 };
 type Props = OwnPros & WrappedComponentProps;
 type State = {
-  response: any;
   loginInput: {
     password: string;
     email: string;
     [key: string]: any;
   };
   loginError: string;
+  activeIndex: number;
 };
 
 class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      response: '',
       loginInput: {
         password: '',
         email: '',
       },
       loginError: '',
+      activeIndex: 0,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
+
+  handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, accordionProps: any) => {
+    const { index } = accordionProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
+  };
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const loginInput = { ...this.state.loginInput };
@@ -78,6 +87,8 @@ class Login extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
+    const { activeIndex, loginError } = this.state;
+
     return (
       <LoginWrapper>
         <LanguageSection>
@@ -122,8 +133,8 @@ class Login extends React.Component<Props, State> {
                   onChange={(e) => this.handleChange(e)}
                   style={{ marginTop: '15px' }}
                 />
-                {this.state.loginError && (
-                  <span style={{ color: 'red', marginTop: '10px' }}>{this.state.loginError}</span>
+                {loginError && (
+                  <span style={{ color: 'red', marginTop: '10px' }}>{loginError}</span>
                 )}
                 <Button type="submit" style={{ color: 'black', marginTop: '25px' }} size="large">
                   <FormattedMessage id="login.submitButton" defaultMessage="送信" />
@@ -139,6 +150,24 @@ class Login extends React.Component<Props, State> {
               />
             </span>
           </Link>
+          <Accordion style={{ textAlign: 'center', marginRight: '20px', marginTop: '10px' }}>
+            <Accordion.Title
+              style={{ color: mainColor }}
+              active={activeIndex === 1}
+              index={1}
+              onClick={this.handleClick}
+            >
+              <Icon name="dropdown" />
+              Demo account
+            </Accordion.Title>
+            <Accordion.Content style={{ marginLeft: '25px' }} active={activeIndex === 1}>
+              <p style={{ textAlign: 'left', color: mainColor }}>
+                email: demo.accounting@e-mail.jp
+                <br />
+                password : accounting1
+              </p>
+            </Accordion.Content>
+          </Accordion>
         </LoginContainer>
       </LoginWrapper>
     );
