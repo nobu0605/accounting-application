@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LanguageDropdown from '../components/LanguageDropdown';
 import { Link } from 'react-router-dom';
 import history from 'history';
+import Loading from '../components/Loading';
 
 type OwnPros = {
   language: string;
@@ -24,6 +25,7 @@ type State = {
   };
   loginError: string;
   activeIndex: number;
+  isLoading: boolean;
 };
 
 class Login extends React.Component<Props, State> {
@@ -36,6 +38,7 @@ class Login extends React.Component<Props, State> {
       },
       loginError: '',
       activeIndex: 0,
+      isLoading: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -58,6 +61,8 @@ class Login extends React.Component<Props, State> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    this.setState({ isLoading: true });
+
     axios
       .post('/api/login', {
         email: this.state.loginInput.email,
@@ -65,9 +70,11 @@ class Login extends React.Component<Props, State> {
       })
       .then((response: any) => {
         localStorage.setItem('token', response.data.token);
+        this.setState({ isLoading: false });
         this.props.history.push('/home');
       })
       .catch((error: any) => {
+        this.setState({ isLoading: false });
         if (error.response.status === 401) {
           return this.setState({
             loginError: this.props.intl.formatMessage({
@@ -87,7 +94,11 @@ class Login extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const { activeIndex, loginError } = this.state;
+    const { activeIndex, loginError, isLoading } = this.state;
+
+    if (isLoading === true) {
+      return <Loading isDataFetching={true} />;
+    }
 
     return (
       <LoginWrapper>
