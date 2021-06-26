@@ -14,6 +14,19 @@ type OwnPros = {
   multipleJournalIndex?: number | null;
   isMismatchTotal: boolean;
   isFilledRequiredFields: boolean;
+  journalInput?: {
+    company_id: number;
+    deal_date: string;
+    debit_account_key: string;
+    debit_sub_account_key: string;
+    debit_amount: number;
+    credit_account_key: string;
+    credit_sub_account_key: string;
+    credit_amount: number;
+    remark: string;
+    has_multiple_journal: boolean;
+    [key: string]: any;
+  };
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     isRequired: boolean,
@@ -34,7 +47,13 @@ class JournalEntry extends React.Component<Props> {
       multipleJournalIndex = null,
       isMismatchTotal,
       isFilledRequiredFields,
+      journalInput,
     } = this.props;
+    let debit_amount, credit_amount;
+    if (journalInput) {
+      debit_amount = journalInput.debit_amount;
+      credit_amount = journalInput.credit_amount;
+    }
 
     return (
       <tr>
@@ -97,6 +116,7 @@ class JournalEntry extends React.Component<Props> {
             name="debit_amount"
             type="number"
             min="0"
+            value={debit_amount}
             onChange={(e) =>
               this.props.handleChange(
                 e,
@@ -151,6 +171,7 @@ class JournalEntry extends React.Component<Props> {
             name="credit_amount"
             type="number"
             min="0"
+            value={credit_amount}
             onChange={(e) =>
               this.props.handleChange(
                 e,

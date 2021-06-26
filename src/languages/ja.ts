@@ -145,6 +145,8 @@ export default {
     'transaction.creditAccountName': '貸方科目',
     'transaction.creditAmount': '貸方金額',
     'transaction.creditTotalAmount': '貸方合計',
+    'transaction.invalidDealDate': 'は現在の会計年度内の日付で入力してください。',
+    'transaction.invalidError': 'は無効な値です。',
     'transaction.journalEntry': '振替伝票を作成しました。',
     'transaction.mismatchTotal': '貸借の金額が一致しません。',
     'transaction.reduceRow': '行削除',

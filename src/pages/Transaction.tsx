@@ -14,7 +14,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import JournalEntry from '../components/JournalEntry';
 import { faPlus, faMinus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 library.add(faPlus, faMinus, faTimesCircle);
-import { isEmpty } from '../utils/validations';
+import { isEmpty, checkInvalidDealDate } from '../utils/validations';
 import history, { createBrowserHistory } from 'history';
 
 type OwnProps = {
@@ -34,15 +34,16 @@ type Props = OwnProps & WrappedComponentProps;
 type ReduxState = UserState & CompanyState;
 
 type IsRequiredErrors = {
-  deal_date: { isRequired: boolean; message: string };
-  debit_account_key: { isRequired: boolean; message: string };
-  debit_sub_account_key: { isRequired: boolean };
-  debit_amount: { isRequired: boolean; message: string };
-  credit_account_key: { isRequired: boolean; message: string };
-  credit_sub_account_key: { isRequired: boolean };
-  credit_amount: { isRequired: boolean; message: string };
-  remark: { isRequired: boolean };
-  isFilledRequiredFields: boolean;
+  deal_date: boolean;
+  debit_account_key: boolean;
+  debit_amount: boolean;
+  credit_account_key: boolean;
+  credit_amount: boolean;
+  [key: string]: any;
+};
+
+type IsInvalidErrors = {
+  deal_date: boolean;
   [key: string]: any;
 };
 
@@ -69,13 +70,23 @@ type State = {
   errors: {
     isServerError: boolean;
     isRequiredErrors: IsRequiredErrors;
+    isInvalidErrors: IsInvalidErrors;
     isMismatchTotal: boolean;
+    isFilledRequiredFields: boolean;
     [key: string]: any;
   };
   hideSuccessMessage: boolean;
 };
 
 const multipleJournalFirstIndex = 2;
+
+const requiredFields = [
+  'deal_date',
+  'debit_account_key',
+  'debit_amount',
+  'credit_account_key',
+  'credit_amount',
+];
 
 class Transaction extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -102,17 +113,24 @@ class Transaction extends React.Component<Props, State> {
       errors: {
         isServerError: false,
         isRequiredErrors: {
-          deal_date: { isRequired: false, message: 'transaction.dealDate' },
-          debit_account_key: { isRequired: false, message: 'transaction.debitAccountName' },
-          debit_sub_account_key: { isRequired: false },
-          debit_amount: { isRequired: false, message: 'transaction.debitAmount' },
-          credit_account_key: { isRequired: false, message: 'transaction.creditAccountName' },
-          credit_sub_account_key: { isRequired: false },
-          credit_amount: { isRequired: false, message: 'transaction.creditAmount' },
-          remark: { isRequired: false },
-          isFilledRequiredFields: false,
+          deal_date: false,
+          debit_account_key: false,
+          debit_amount: false,
+          credit_account_key: false,
+          credit_amount: false,
+        },
+        isInvalidErrors: {
+          deal_date: false,
         },
         isMismatchTotal: false,
+        isFilledRequiredFields: false,
+        errorMessageKeys: {
+          deal_date: 'transaction.dealDate',
+          debit_account_key: 'transaction.debitAccountName',
+          debit_amount: 'transaction.debitAmount',
+          credit_account_key: 'transaction.creditAccountName',
+          credit_amount: 'transaction.creditAmount',
+        },
       },
       hideSuccessMessage: false,
     };
@@ -182,6 +200,20 @@ class Transaction extends React.Component<Props, State> {
     e.preventDefault();
     const journal = this.state.journalInput;
     const multipleJournals = this.state.multipleJournalsInput;
+    const errors = { ...this.state.errors };
+    requiredFields.map((requiredField) => {
+      if (isEmpty(journal[requiredField])) {
+        errors['isRequiredErrors'][requiredField] = true;
+      }
+    });
+    this.setState({ errors });
+    if (
+      Object.values(errors.isRequiredErrors).includes(true) ||
+      Object.values(errors.isInvalidErrors).includes(true) ||
+      Object.values(errors.isMismatchTotal).includes(true)
+    ) {
+      return;
+    }
 
     axios
       .post('/api/journals/new', {
@@ -207,23 +239,31 @@ class Transaction extends React.Component<Props, State> {
     multipleJournalIndex?: number | null
   ) {
     const journalInput = { ...this.state.journalInput };
+    const { fiscal_start_date, fiscal_end_date } = this.props.company;
     const errors = { ...this.state.errors };
     let inputValue: string | number = e.target.value;
+    const name: string = e.target.name;
     if (isEmpty(inputValue) && isRequired) {
-      errors['isRequiredErrors'][e.target.name]['isRequired'] = true;
-      errors['isRequiredErrors']['isFilledRequiredFields'] = false;
+      errors['isRequiredErrors'][name] = true;
+      errors['isFilledRequiredFields'] = false;
       return this.setState({ errors });
     }
-    errors['isRequiredErrors'][e.target.name]['isRequired'] = false;
+    errors['isRequiredErrors'][name] = false;
 
     const isRequiredErrors = errors['isRequiredErrors'];
-    errors['isRequiredErrors']['isFilledRequiredFields'] = this.checkRequiredError(
-      isRequiredErrors,
-      'isRequired'
-    );
+    errors['isFilledRequiredFields'] = this.checkRequiredError(isRequiredErrors, 'isRequired');
 
-    if (e.target.name === 'debit_amount' || e.target.name === 'credit_amount') {
+    if (name === 'debit_amount' || name === 'credit_amount') {
       inputValue = parseInt(e.target.value);
+    }
+
+    if (name === 'deal_date') {
+      const isInvalidError = checkInvalidDealDate(
+        inputValue.toString(),
+        fiscal_start_date,
+        fiscal_end_date
+      );
+      errors['isInvalidErrors']['deal_date'] = isInvalidError;
     }
 
     if (multipleJournalIndex) {
@@ -231,7 +271,7 @@ class Transaction extends React.Component<Props, State> {
       // multipleJournalIndex starts from 2. But multipleJournalsInput's array index starts from 0.
       const IndexNumber = multipleJournalIndex - 2;
       const multipleJournalsInput = this.state.multipleJournalsInput;
-      multipleJournalsInput[IndexNumber][e.target.name] = inputValue;
+      multipleJournalsInput[IndexNumber][name] = inputValue;
       this.setState({ journalInput });
       return this.setState({ multipleJournalsInput });
     }
@@ -241,7 +281,7 @@ class Transaction extends React.Component<Props, State> {
     }
 
     this.setState({ errors });
-    journalInput[e.target.name] = inputValue;
+    journalInput[name] = inputValue;
     this.setState({ journalInput });
   }
 
@@ -290,19 +330,38 @@ class Transaction extends React.Component<Props, State> {
 
   renderErrorMessages() {
     const errorMessages: Array<any> = [];
-    const isRequiredErrors = this.state.errors.isRequiredErrors;
+    const { isRequiredErrors, isInvalidErrors, errorMessageKeys } = this.state.errors;
     {
       Object.keys(isRequiredErrors).forEach((key: string, index: number) => {
-        if (isRequiredErrors[key]['isRequired'] === true) {
+        if (isRequiredErrors[key] === true) {
           errorMessages.push(
             <span key={index} style={{ color: 'red' }}>
               {this.props.intl.formatMessage({
-                id: isRequiredErrors[key]['message'],
+                id: errorMessageKeys[key],
                 defaultMessage: 'error',
               })}
               {this.props.intl.formatMessage({
                 id: 'transaction.requiredError',
                 defaultMessage: 'は入力必須項目です。',
+              })}
+            </span>
+          );
+        }
+      });
+
+      Object.keys(isInvalidErrors).forEach((key: string, index: number) => {
+        if (isInvalidErrors[key] === true) {
+          const messageId =
+            key === 'deal_date' ? 'transaction.invalidDealDate' : 'transaction.invalidError';
+          errorMessages.push(
+            <span key={index} style={{ color: 'red' }}>
+              {this.props.intl.formatMessage({
+                id: errorMessageKeys[key],
+                defaultMessage: 'error',
+              })}
+              {this.props.intl.formatMessage({
+                id: messageId,
+                defaultMessage: 'は無効な値です。',
               })}
             </span>
           );
@@ -321,24 +380,22 @@ class Transaction extends React.Component<Props, State> {
         );
       }
 
+      if (this.state.errors.isMismatchTotal) {
+        errorMessages.push(
+          <span style={{ color: 'red' }}>
+            {this.props.intl.formatMessage({
+              id: 'transaction.mismatchTotal',
+              defaultMessage: '貸借の金額が一致しません。',
+            })}
+          </span>
+        );
+      }
+
       if (errorMessages.length === 0) {
         return null;
       }
 
-      return (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '80px',
-            marginRight: '50px',
-            flexDirection: 'column',
-          }}
-        >
-          {errorMessages}
-        </div>
-      );
+      return <ErrorMessages>{errorMessages}</ErrorMessages>;
     }
   }
 
@@ -365,7 +422,7 @@ class Transaction extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     const { accounts } = this.state;
-    const isFilledRequiredFields = this.state.errors.isRequiredErrors.isFilledRequiredFields;
+    const isFilledRequiredFields = this.state.errors.isFilledRequiredFields;
     const isDoneRegistration = this.props.location.state
       ? this.props.location.state.isDoneRegistration
       : false;
@@ -461,33 +518,19 @@ class Transaction extends React.Component<Props, State> {
                 </tr>
               </thead>
               <tbody>
+                {/* The first line of journal. */}
                 <JournalEntry
                   isMultipleJournal={false}
                   accounts={accounts}
                   isFilledRequiredFields={isFilledRequiredFields}
                   isMismatchTotal={this.state.errors.isMismatchTotal}
                   handleChange={this.handleChange.bind(this)}
+                  journalInput={this.state.journalInput}
                 />
                 {this.state.timesToAddJournal > 0 && this.renderJournalEntries()}
               </tbody>
             </table>
           </form>
-          {this.state.errors.isMismatchTotal && (
-            <div
-              style={{
-                textAlign: 'center',
-                color: 'black',
-                marginRight: '50px',
-              }}
-            >
-              <span>
-                <FormattedMessage
-                  id="transaction.mismatchTotal"
-                  defaultMessage="貸借の金額が一致しません。"
-                />
-              </span>
-            </div>
-          )}
           {this.renderErrorMessages()}
           <div
             style={{
@@ -593,6 +636,15 @@ const TableData = styled.td`
   text-align: center;
   border-top: 1px solid #ddd;
   border-left: 1px solid #ddd;
+`;
+const ErrorMessages = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-right: 50px;
+  flex-direction: column;
+  margin-bottom: 30px;
 `;
 
 function mapStateToProps(state: ReduxState) {
