@@ -1,4 +1,4 @@
-import { isValidPassword, isValidAccountKey, isEmpty } from './validations';
+import { isValidPassword, isValidAccountKey, isEmpty, checkInvalidDealDate } from './validations';
 
 describe('check password strength', () => {
   test('success', () => {
@@ -47,6 +47,21 @@ describe('isEmpty', () => {
   });
   test('false', () => {
     const value = 'hoge';
-    expect(isValidPassword(value)).toEqual(false);
+    expect(isEmpty(value)).toEqual(false);
+  });
+});
+
+describe('checkInvalidDealDate', () => {
+  test('true', () => {
+    const dealDate = '2020-04-02';
+    const fiscal_start_date = '2020-04-01';
+    const fiscal_end_date = '2021-03-31';
+    expect(checkInvalidDealDate(dealDate, fiscal_start_date, fiscal_end_date)).toEqual(false);
+  });
+  test('false', () => {
+    const dealDate = '2019-08-02';
+    const fiscal_start_date = '2020-04-01';
+    const fiscal_end_date = '2021-03-31';
+    expect(checkInvalidDealDate(dealDate, fiscal_start_date, fiscal_end_date)).toEqual(true);
   });
 });

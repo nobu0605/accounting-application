@@ -146,6 +146,8 @@ export default {
     'transaction.creditAccountName': 'Credit account',
     'transaction.creditAmount': 'Credit amount',
     'transaction.creditTotalAmount': 'Credit total amount',
+    'transaction.invalidDealDate': ' should be within the current fiscal year.',
+    'transaction.invalidError': ' is invalid value',
     'transaction.journalEntry': 'Your journal entry was successful.',
     'transaction.mismatchTotal': "Debit and credit amount don't match.",
     'transaction.reduceRow': 'Reduce a row',
