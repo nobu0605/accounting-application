@@ -7,4 +7,3 @@
 ### Start application
 
 `npm start`
-
